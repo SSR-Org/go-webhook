@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -38,7 +39,8 @@ func main() {
 // }
 
 func handleWebhook(w http.ResponseWriter, r *http.Request) {
-	payload, err := github.ValidatePayload(r, []byte("my-secret-key"))
+	// payload, err := github.ValidatePayload(r, []byte("my-secret-key"))
+	payload, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("error validating request body: err=%s\n", err)
 		return
